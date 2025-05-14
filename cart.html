@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Book Shopping Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eef2f5;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      color: #333;
+    }
+
+    .book-list, .cart {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(98, 40, 40, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .book {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    button {
+      margin-top: 8px;
+      padding: 6px 12px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📚 Book Store</h1>
+
+  <div class="book-list" id="bookList">
+    <h2>Available Books</h2>
+    <!-- Books will be dynamically added here -->
+  </div>
+
+  <div class="cart" id="cart">
+    <h2>🛒 Shopping Cart</h2>
+    <ul id="cartItems">
+      <li>Your cart is empty.</li>
+    </ul>
+  </div>
+
+  <script>
+    const books = [
+      { title: "Learning JavaScript", price: 35.00 },
+      { title: "HTML & CSS Design", price: 29.99 },
+      { title: "Python for Beginners", price: 40.50 }
+    ];
+
+    const cart = [];
+
+    const bookList = document.getElementById("bookList");
+    const cartItems = document.getElementById("cartItems");
+
+    function updateCart() {
+      cartItems.innerHTML = "";
+      if (cart.length === 0) {
+        cartItems.innerHTML = "<li>Your cart is empty.</li>";
+        return;
+      }
+
+      cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.title} - $${item.price.toFixed(2)}`;
+        cartItems.appendChild(li);
+      });
+    }
+
+    books.forEach(book => {
+      const div = document.createElement("div");
+      div.className = "book";
+      div.innerHTML = `
+        <strong>${book.title}</strong><br>
+        Price: $${book.price.toFixed(2)}<br>
+      `;
+      const btn = document.createElement("button");
+      btn.textContent = "Add to Cart";
+      btn.onclick = () => {
+        cart.push(book);
+        updateCart();
+      };
+      div.appendChild(btn);
+      bookList.appendChild(div);
+    });
+
+    updateCart();
+  </script>
+
+</body>
+</html>
